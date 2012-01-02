@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block titulo %}Vote - {{ block.super }}{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+function validVote(comp){
+    $.ajax({
+        type: "GET",
+        url: "{% url countVote %}",
+        dataType: "html",
+        success: function(txt) {
+            $(comp).remove();
+        }
+    });
+}
+$(window).unload(function() {
+    $.ajax({
+        type: "GET",
+        url: "{% url cleanVote %}",
+        dataType: "html"
+    });
+});
+</script>
+{% endblock %}
+{% block menu %}{{ block.super }}{% endblock %}
+{% block page %}
+<h2 align="center">Vote</h2>
+<br />
+<div align="center">
+    <div style="float: left; width: 69%;">
+        {% for link in links %}
+        <div style="height: 100px; position: relative; width: 50%;" onclick="validVote(this);">
+            <script type="text/javascript">
+                bb_bid = "1616913";
+                bb_lang = "pt-BR";
+                bb_keywords = "rpg,online,futebol,jogos,games,fifa,esporte,diversão,celular,site,web,internet";
+                bb_name = "custom";
+                bb_limit = "4";
+                bb_format = "bbd";
+            </script>
+            <script type="text/javascript" src="http://static.boo-box.com/javascripts/embed.js"></script>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="float: right; width: 30%;"><img onclick="javascript:window.open('http://www.gamesites200.com/lineage2/in.php?id=28457', 'TOP 200 L2POG')" alt="Vote on the Lineage 2 Top 200" src="http://www.gamesites200.com/lineage2/vote.gif" /></div>
+    <div style="clear: both;"></div>
+    {% if form %}
+        <div>
+            <form action="" method="post">
+                <table>
+                {{ form.as_table }}
+                {% csrf_token %}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Receber Item" /></td>
+                </tr>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+    {% if msg_erro %}
+        <div class="ui-state-error">{{ msg_erro }}</div>
+    {% endif %}
+    {% if msg_success %}
+        <div class="ui-state-highlight ">{{ msg_success }}</div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block titulo %}Contato - {{ block.super }}{% endblock %}
+{% block menu %}{{ block.super }}{% endblock %}
+{% block page %}
+<h2 align="center">Anúncios</h2>
+<br />
+<div align="center">
+{% for x in anuncios %}
+    <div class="anuncios">
+        <script type="text/javascript">
+            bb_bid = "1616913";
+            bb_lang = "pt-BR";
+            bb_keywords = "rpg,online,futebol,jogos,games,fifa,esporte,diversão,celular,site,web,internet";
+            bb_name = "custom";
+            bb_limit = "4";
+            bb_format = "bbd";
+        </script>
+        <script type="text/javascript" src="http://static.boo-box.com/javascripts/embed.js"></script>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

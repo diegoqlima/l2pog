@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block titulo %}Register - {{ block.super }}{% endblock %}
+{% block menu %}{{ block.super }}{% endblock %}
+{% block page %}
+<h2 align="center">Account Register</h2>
+<br />
+<div>
+    <form method="post" action="">
+        <table>
+        {{ form.as_table }}
+        {% csrf_token %}
+        <tr>
+            <td colspan="2"><input type="submit" value="Register" /></td>
+        </tr>
+        </table>
+        {% if msg_erro %}
+            <div class="ui-state-error">{{ msg_erro }}</div>
+        {% endif %}
+        {% if msg_success %}
+            <div class="ui-state-highlight ">{{ msg_success }}</div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

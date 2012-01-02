@@ -1,0 +1,121 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+  <head>
+    <title>{% block titulo %}L2POG{% endblock %}</title>
+    {% block meta %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    {% endblock meta %}
+    {% block style %}
+    <link rel="stylesheet" type="text/css" href="/media/css.css" />
+    <link rel="stylesheet" type="text/css" href="/media/jquery-ui-1.8.16.custom.css" />
+    {% endblock style %}
+    {% block scripts %}
+    <script type="text/javascript" src="/media/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/media/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript">
+        $(function() { 
+            $("#dialog-modal").dialog({
+                autoOpen: false,
+                width: '500px',
+                resizable: false,
+                modal: true                
+            });
+            $("input:submit").button();
+        });
+    </script>
+    {% endblock scripts %}
+  </head>
+  <body style="background: #000000 url('{{ bg_image }}') no-repeat center top;">
+    <div id="dialog-modal"></div>
+    <div id="logo">
+      <h1><a href="">L2POG</a></h1>
+      <h2><a href="">Server FULL POG</a></h2>
+    </div>
+    <div id="menu">
+      <div class="fundo-menu"></div>
+      {% block menu %}
+        <ul>
+            <li><a href="{% url login %}">Home</a></li>
+            <li><a href="{% url download %}">Download</a></li>
+        {% if request.session.user %}
+            <li><a href="{% url vote %}">Voto</a></li>
+            <li><a href="{% url socio %}">Sócio</a></li>
+        {% else %}
+            <li><a href="{% url rates %}">Rates</a></li>
+            <li><a href="{% url contato %}">Contato</a></li>
+        {% endif %}
+            <li><a href="{% url anuncios %}">Anúncios</a></li>
+            <li></li>
+        </ul>
+      {% endblock %}
+    </div>
+    <div id="page">
+      {% block page %}
+      <div id="content">
+        {% block conteudo %}
+            {% for note in notices %}
+                <div class="post">
+                  <div class="title">
+                    <h2>{{ note.subject }}</h2>
+                  </div>
+                  <h3 class="date">{{ note.date }}</h3>
+                  <div class="meta">
+                    <p>Posted by {{ note.author }}</p>
+                  </div>
+                  <div class="story">
+                    {{ note.text }}
+                  </div>
+                </div>
+            {% endfor %}
+        {% endblock %}
+      </div>
+
+      <div id="sidebar">
+        <div id="login" class="boxed">
+          <div class="title">
+            <h2>Client Account</h2>
+          </div>
+          <div class="content">
+          {% block login %}
+            {% if request.session.user %}
+                Bem Vindo(a) {{ request.session.user }}
+                <br /><br />
+                <a href="">Alterar Senha</a><br />
+                <a href="{% url logout %}">Sair</a>
+            {% else %}
+            <form id="form1" method="post" action="">
+                <fieldset>
+                    <legend>Sign-In</legend>
+                    <label for="inputtext1">Client ID:</label>
+                    <input id="id_login" type="text" name="login" value="" />
+                    <label for="inputtext2">Password:</label>
+                    <input id="id_password" type="password" name="password" value="" />
+                    {% csrf_token %}
+                    <input type="submit" value="Sign In" />
+                    <p><a href="">Forgot your password?</a></p>
+                    <p><a href="{% url register %}">Register</a></p>
+                    {% if msg_erro %}
+                        <div class="ui-state-error">{{ msg_erro }}</div>
+                    {% endif %}
+                </fieldset>
+            </form>
+            {% endif %}
+          {% endblock %}
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+      <div id="extra" style="clear: both;">&nbsp;</div>
+    </div>
+    <!-- end #page -->
+    <div id="footer">
+      <p id="legal">Copyright &copy; 2011 L2POG. All Rights Reserved. Designed by L2POG.</p>
+      <p id="links"><a href="{% url login %}">Home</a></p>
+    </div>
+  </body>
+</html>
