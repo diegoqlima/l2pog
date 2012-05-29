@@ -26,11 +26,15 @@
                 modal: true                
             });
             $("input:submit").button();
+            
+            var bg_image = "/media/imgs/themes/interior_banner";
+            bg_image = bg_image + parseInt(Math.random(9)*10) + ".jpg";
+            $('body').css("background","#000000 url('"+bg_image+"') no-repeat center top");
         });
     </script>
     {% endblock scripts %}
   </head>
-  <body style="background: #000000 url('{{ bg_image }}') no-repeat center top;">
+  <body>
     <div id="dialog-modal"></div>
     <div id="logo">
       <h1><a href="">L2POG</a></h1>
