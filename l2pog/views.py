@@ -41,17 +41,12 @@ def idle(f):
 @authentic
 @idle
 def index(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     notices = Notice.objects.order_by('-date')[:5]
     return render_to_response('l2pog/index.html', locals(), context_instance=RequestContext(request))
 
 @authentic
 @idle
 def vote(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
-
     acc = Accounts.objects.get(login=request.session["user"])
     userID = User.objects.get(iduser=acc.iduser.iduser)
     ipUser = request.META['REMOTE_ADDR']
@@ -148,29 +143,19 @@ def cleanVote(request):
 @authentic
 @idle
 def socio(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     return render_to_response('l2pog/socio.html', locals(), context_instance=RequestContext(request))
 
 def download(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     return render_to_response('l2pog/download.html', locals(), context_instance=RequestContext(request))
 
 def rates(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     return render_to_response('l2pog/rates.html', locals(), context_instance=RequestContext(request))
 
 def anuncios(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     anuncios = range(10)
     return render_to_response('l2pog/anuncios.html', locals(), context_instance=RequestContext(request))
 
 def contato(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     if request.method == 'POST':
         form = FormContato(request.POST)
         if form.is_valid():
@@ -184,8 +169,6 @@ def contato(request):
     return render_to_response('l2pog/contato.html', locals(), context_instance=RequestContext(request))
 
 def login(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     notices = Notice.objects.order_by('-date')[:5]
     if request.method == 'POST':
         user = request.POST['login']
@@ -215,8 +198,6 @@ def logout(request):
     return HttpResponseRedirect(reverse('login'))
 
 def register(request):
-    bg_image = "/media/imgs/themes/interior_banner"
-    bg_image = bg_image + str(random.randint(0,9)) + ".jpg"
     form = FormRegister()
     if request.method == 'POST':
         form = FormRegister(request.POST)
